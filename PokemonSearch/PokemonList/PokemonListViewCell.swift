@@ -13,16 +13,15 @@ struct PokemonListViewCell: View {
 
   var body: some View {
     HStack {
+      Spacer()
       CachedImageView(url: pokemon.imageURL, encodedImageString: charizardString)
         .frame(width: 100, height: 100)
-      //      AsyncImage(url: pokemon.imageURL) { image in
-      //        image.resizable()
-      //          .scaledToFit()
-      //      } placeholder: {
-      //        ProgressView()
-      //      }
       Text(pokemon.name)
+        .font(.title2)
+      Spacer()
+
     }
+    .background(Color.gray.opacity(0.1))
   }
 }
 
@@ -30,21 +29,14 @@ struct PokemonListViewCell: View {
 class ImageLoader: ObservableObject {
   @Published var image: UIImage?
 
-  private var cache = NSCache<NSURL, UIImage>()
-
   func load(from url: URL?) {
     guard let url else { return }
-    if let cachedImage = cache.object(forKey: url as NSURL) {
-      self.image = cachedImage
-      return
-    }
 
     Task {
       do {
         let (data, _) = try await URLSession.shared.data(from: url)
         if let loadedImage = UIImage(data: data) {
           await MainActor.run { [weak self] in
-            self?.cache.setObject(loadedImage, forKey: url as NSURL)
             self?.image = loadedImage
           }
         }
@@ -63,8 +55,13 @@ struct CachedImageView: View {
 
   var encodedImage: UIImage? {
     guard let encodedImageString, let data = Data(base64Encoded: encodedImageString.data(using: .utf8)!) else { return nil }
-
     return UIImage(data: data)
+  }
+
+  init(url: URL?, encodedImageString: String? = nil) {
+    print("NEW CACHED IMAGE VIEW CREATED FOR :\(url!.absoluteString)")
+    self.url = url
+    self.encodedImageString = encodedImageString
   }
 
   var body: some View {
