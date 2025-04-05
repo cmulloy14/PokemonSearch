@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		B896F8812D9DD32000B8E427 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B8B86D772D9B000B00D3539C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B8B86D7E2D9B000B00D3539C;
+			remoteInfo = PokemonSearch;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		B896F87D2D9DD32000B8E427 /* PokemonSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B86D7F2D9B000B00D3539C /* PokemonSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B896F87E2D9DD32000B8E427 /* PokemonSearchTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PokemonSearchTests;
+			sourceTree = "<group>";
+		};
 		B8B86D812D9B000B00D3539C /* PokemonSearch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PokemonSearch;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B896F87A2D9DD32000B8E427 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B8B86D7C2D9B000B00D3539C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				B8B86D812D9B000B00D3539C /* PokemonSearch */,
+				B896F87E2D9DD32000B8E427 /* PokemonSearchTests */,
 				B8B86D802D9B000B00D3539C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				B8B86D7F2D9B000B00D3539C /* PokemonSearch.app */,
+				B896F87D2D9DD32000B8E427 /* PokemonSearchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B896F87C2D9DD32000B8E427 /* PokemonSearchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B896F8832D9DD32000B8E427 /* Build configuration list for PBXNativeTarget "PokemonSearchTests" */;
+			buildPhases = (
+				B896F8792D9DD32000B8E427 /* Sources */,
+				B896F87A2D9DD32000B8E427 /* Frameworks */,
+				B896F87B2D9DD32000B8E427 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B896F8822D9DD32000B8E427 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B896F87E2D9DD32000B8E427 /* PokemonSearchTests */,
+			);
+			name = PokemonSearchTests;
+			packageProductDependencies = (
+			);
+			productName = PokemonSearchTests;
+			productReference = B896F87D2D9DD32000B8E427 /* PokemonSearchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B8B86D7E2D9B000B00D3539C /* PokemonSearch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8B86D8D2D9B000D00D3539C /* Build configuration list for PBXNativeTarget "PokemonSearch" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					B896F87C2D9DD32000B8E427 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = B8B86D7E2D9B000B00D3539C;
+					};
 					B8B86D7E2D9B000B00D3539C = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				B8B86D7E2D9B000B00D3539C /* PokemonSearch */,
+				B896F87C2D9DD32000B8E427 /* PokemonSearchTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B896F87B2D9DD32000B8E427 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B8B86D7D2D9B000B00D3539C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B896F8792D9DD32000B8E427 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B8B86D7B2D9B000B00D3539C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B896F8822D9DD32000B8E427 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B8B86D7E2D9B000B00D3539C /* PokemonSearch */;
+			targetProxy = B896F8812D9DD32000B8E427 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B896F8842D9DD32000B8E427 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZADTYNKSW2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pat-mulloy.PokemonSearchTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PokemonSearch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PokemonSearch";
+			};
+			name = Debug;
+		};
+		B896F8852D9DD32000B8E427 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZADTYNKSW2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pat-mulloy.PokemonSearchTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PokemonSearch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PokemonSearch";
+			};
+			name = Release;
+		};
 		B8B86D8B2D9B000D00D3539C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -305,6 +416,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B896F8832D9DD32000B8E427 /* Build configuration list for PBXNativeTarget "PokemonSearchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B896F8842D9DD32000B8E427 /* Debug */,
+				B896F8852D9DD32000B8E427 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B8B86D7A2D9B000B00D3539C /* Build configuration list for PBXProject "PokemonSearch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

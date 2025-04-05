@@ -1,0 +1,24 @@
+{
+  "swift.buildArguments": [
+    "-Xswiftc",
+    "-enable-bare-slash-regex",
+    "-Xswiftc",
+    "-swift-version",
+    "-Xswiftc",
+    "5.9",
+    "-Xswiftc",
+    "-target",
+    "-Xswiftc",
+    "arm64-apple-ios16.0",
+    "-Xswiftc",
+    "-sdk",
+    "-Xswiftc",
+    "${config:xcode.path}/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
+  ],
+  "swift.path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "swift.swiftEnvironmentVariables": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app"
+  },
+  "sweetpad.build.xcodeWorkspacePath": "RayaWorkspace/Raya.xcodeproj/project.xcworkspace",
+  "xcode.path": "/Applications/Xcode.app"
+}

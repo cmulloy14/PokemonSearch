@@ -7,13 +7,21 @@
 
 import Foundation
 
+protocol PokemonServiceProtocol {
+    func fetchPokemonList(from url: String?) async throws -> PokemonListResponse
+}
+
 @MainActor
-final class PokemonViewModel: ObservableObject {
+final class PokemonListViewModel: ObservableObject {
     @Published var pokemonList: [Pokemon] = []
     @Published var nextPageURL: String? = "https://pokeapi.co/api/v2/pokemon"
     @Published var isLoading = false
 
-    private let service = PokemonService.shared
+    private let service: PokemonServiceProtocol
+
+    init(service: PokemonServiceProtocol = PokemonService.shared) {
+        self.service = service
+    }
 
     func fetchPokemon() async {
         guard let url = nextPageURL, !isLoading else { return }

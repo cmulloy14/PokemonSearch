@@ -26,6 +26,12 @@ struct PokemonSearchApp: App {
             Label("Search", systemImage: "magnifyingglass")
           }
           .tag(1)
+
+        PokemonWatchlistView()
+          .tabItem {
+            Label("Watch List", systemImage: "star")
+          }
+          .tag(2)
       }
     }
   }

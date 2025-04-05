@@ -16,9 +16,16 @@ struct PokemonListResponse: Decodable {
 }
 
 struct Pokemon: Decodable, Identifiable, Equatable {
+
+  init(name: String, url: String?) {
+    self.name = name
+    self.url = url
+  }
+
+  
   let name: String
   var url: String?
-  var pokemonID: Int?
+  private var pokemonID: Int?
 
   var imageURL: URL? {
     guard let id else { return nil }
@@ -53,18 +60,17 @@ struct Pokemon: Decodable, Identifiable, Equatable {
 }
 
 // MARK: - Network Service
-class PokemonService {
+final class PokemonService: PokemonServiceProtocol {
   static let shared = PokemonService()
+  private init() {}
   private let baseURL = "https://pokeapi.co/api/v2/pokemon"
 
-  func fetchPokemonList(from url: String? = nil) async throws -> PokemonListResponse {
+  func fetchPokemonList(from url: String?) async throws -> PokemonListResponse {
     let urlString = url ?? baseURL
     guard let url = URL(string: urlString) else {
       throw URLError(.badURL)
     }
-
-    let request = URLRequest(url: url, cachePolicy: .reloadRevalidatingCacheData)
-    let (data, _) = try await URLSession.shared.data(for: request)
+    let (data, _) = try await URLSession.shared.data(from: url)
     return try JSONDecoder().decode(PokemonListResponse.self, from: data)
   }
 
@@ -76,7 +82,5 @@ class PokemonService {
     let (data, _) = try await URLSession.shared.data(from: url)
     return try JSONDecoder().decode(Pokemon.self, from: data)
   }
-
-
 }
 

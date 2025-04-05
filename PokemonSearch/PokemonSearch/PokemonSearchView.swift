@@ -10,6 +10,7 @@ import SwiftUI
 struct PokemonSearchView: View {
   @StateObject private var viewModel = PokemonSearchViewModel()
 
+  @FocusState private var textFieldFocused: Bool
 
   var body: some View {
     VStack {
@@ -20,9 +21,17 @@ struct PokemonSearchView: View {
           viewModel.searchPokemon()
         }
         .padding()
+        .focused($textFieldFocused)
 
       if let pokemon = viewModel.pokemon {
-        CachedImageView(url: pokemon.imageURL)
+        PokemonSearchDetailView(pokemon: pokemon)
+      } else {
+        Spacer()
+      }
+    }
+    .onAppear {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        textFieldFocused = true
       }
     }
     .padding()

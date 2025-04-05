@@ -42,8 +42,6 @@ class ImageLoader: ObservableObject {
     Task {
       do {
         let (data, _) = try await URLSession.shared.data(from: url)
-        print(data.base64EncodedString())
-
         if let loadedImage = UIImage(data: data) {
           await MainActor.run { [weak self] in
             self?.cache.setObject(loadedImage, forKey: url as NSURL)
