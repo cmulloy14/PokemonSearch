@@ -8,49 +8,81 @@
 import SwiftUI
 
 struct PokemonListView: View {
+
+  enum ViewMode {
+      case list
+      case grid
+  }
+
   @StateObject private var viewModel = PokemonListViewModel()
+  @State private var viewMode: ViewMode = .list
 
   private let columns = [
     GridItem(.flexible()),
     GridItem(.flexible())
   ]
 
+
+
   var body: some View {
     NavigationView {
-      ScrollView {
-        LazyVStack(spacing: 0) {
-          ForEach(viewModel.pokemonList.indices, id: \.self) { index in
-            let pokemon = viewModel.pokemonList[index]
-
-            VStack(spacing: 0) {
-              PokemonListViewCell(pokemon: pokemon)
-                .onAppear {
-                  if pokemon == viewModel.pokemonList.last {
-                    Task {
-                      await viewModel.fetchPokemon()
-                    }
-                  }
-                }
-
-              if index != viewModel.pokemonList.count - 1 {
-                Divider()
-                //.padding(.leading, 60) // to offset for the Pokémon image
-                  .background(Color.white.opacity(0.8)) // or your desired color
-              }
+      ZStack {
+        if viewModel.showError {
+          Image(systemName: "exclamationmark.triangle.fill")
+            .foregroundStyle(.red)
+        }
+        ScrollView {
+          if viewMode == .list {
+            LazyVStack(spacing: 4) {
+              createList()
             }
-          }
-          if viewModel.isLoading {
-            ProgressView()
-              .padding()
+            .padding(.top)
+          } else {
+            LazyVGrid(columns: columns, spacing: 16) {
+              createList()
+            }
+            .padding(.top)
           }
         }
-        .padding(.top)
+        .animation(.easeInOut, value: viewMode)
       }
-
       .navigationTitle("Pokémon List")
+      .toolbar {
+        Picker("View Mode", selection: $viewMode) {
+          Label("List", systemImage: "list.bullet").tag(ViewMode.list)
+          Label("Grid", systemImage: "square.grid.2x2").tag(ViewMode.grid)
+        }
+        .padding()
+      }
       .task {
         await viewModel.fetchPokemon()
       }
     }
+    .alert("Something went wrong", isPresented: $viewModel.showErrorAlert) {
+      Button("OK", role: .cancel) { }
+    }
+  }
+
+  @ViewBuilder
+  private func createList() -> some View {
+    ForEach(viewModel.pokemonList.indices, id: \.self) { index in
+      let pokemon = viewModel.pokemonList[index]
+      createCell(pokemon: pokemon, viewMode: viewMode)
+    }
+    if viewModel.isLoading {
+      ProgressView()
+        .padding()
+    }
+  }
+
+  private func createCell(pokemon: Pokemon, viewMode: ViewMode) -> some View {
+    PokemonListViewCell(pokemon: pokemon, viewMode: viewMode)
+      .onAppear {
+        if pokemon == viewModel.pokemonList.last {
+          Task {
+            await viewModel.fetchPokemon()
+          }
+        }
+      }
   }
 }

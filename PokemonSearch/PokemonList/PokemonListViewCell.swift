@@ -10,18 +10,22 @@ import SwiftUI
 
 struct PokemonListViewCell: View {
   var pokemon: Pokemon
+  var viewMode: PokemonListView.ViewMode
 
   var body: some View {
     HStack {
       Spacer()
       CachedImageView(url: pokemon.imageURL, encodedImageString: charizardString)
         .frame(width: 100, height: 100)
+        .accessibilityLabel("image of \(pokemon.name)")
       Text(pokemon.name)
-        .font(.title2)
+        .font(viewMode == .list ? .title2 : .subheadline)
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
       Spacer()
-
     }
-    .background(Color.gray.opacity(0.1))
+    .background(Color.gray.opacity(0.3))
+    .clipShape(RoundedRectangle(cornerRadius: 8))
   }
 }
 

@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Models
 struct PokemonListResponse: Decodable {
   let count: Int
-  let next: String?
+  let next: URL?
   let previous: String?
   let results: [Pokemon]
 }
@@ -63,15 +63,25 @@ struct Pokemon: Decodable, Identifiable, Equatable {
 final class PokemonService: PokemonServiceProtocol {
   static let shared = PokemonService()
   private init() {}
-  private let baseURL = "https://pokeapi.co/api/v2/pokemon"
+  private let baseURL = URL(string:"https://pokeapi.co/api/v2/pokemon")!
 
-  func fetchPokemonList(from url: String?) async throws -> PokemonListResponse {
-    let urlString = url ?? baseURL
-    guard let url = URL(string: urlString) else {
-      throw URLError(.badURL)
-    }
+  func fetchPokemonList(from url: URL?) async throws -> PokemonListResponse {
+    let url = url ?? baseURL
     let (data, _) = try await URLSession.shared.data(from: url)
     return try JSONDecoder().decode(PokemonListResponse.self, from: data)
+  }
+
+  func fetchPokemonList(
+  from url: URL?,
+  completion: @escaping (Result<PokemonListResponse, Error>) -> Void) {
+    Task {
+      do {
+        let response = try await fetchPokemonList(from: url)
+        completion(.success(response))
+      } catch {
+        completion(.failure(error))
+      }
+    }
   }
 
   func pokemonSearch(searchText: String) async throws -> Pokemon {
