@@ -13,15 +13,17 @@ protocol PokemonServiceProtocol {
     from url: URL?,
     completion: @escaping (Result<PokemonListResponse, Error>) -> Void
   )
+  func getPokemonDetail(url: URL) async throws -> PokemonDetail
 }
 
 @MainActor
 final class PokemonListViewModel: ObservableObject {
-  @Published var pokemonList: [Pokemon] = []
+  @Published var pokemonList: [PokemonListItem] = []
   @Published var nextPageURL = URL(string:"https://pokeapi.co/api/v2/pokemon")
   @Published var isLoading = false
   @Published var showError = false
   @Published var showErrorAlert = false
+  @Published var searchText = ""
 
   private let service: PokemonServiceProtocol
 

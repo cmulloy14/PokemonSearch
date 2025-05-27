@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct PokemonListViewCell: View {
-  var pokemon: Pokemon
+  var pokemon: PokemonListItem
   var viewMode: PokemonListView.ViewMode
 
   var body: some View {
@@ -35,7 +35,6 @@ class ImageLoader: ObservableObject {
 
   func load(from url: URL?) {
     guard let url else { return }
-
     Task {
       do {
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -63,7 +62,6 @@ struct CachedImageView: View {
   }
 
   init(url: URL?, encodedImageString: String? = nil) {
-    print("NEW CACHED IMAGE VIEW CREATED FOR :\(url!.absoluteString)")
     self.url = url
     self.encodedImageString = encodedImageString
   }

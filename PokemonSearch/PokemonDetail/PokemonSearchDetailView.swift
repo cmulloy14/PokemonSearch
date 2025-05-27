@@ -1,5 +1,5 @@
 //
-//  PokemonSearchDetailView.swift
+//  PokemonDetailView.swift
 //  PokemonSearch
 //
 //  Created by Pat Mulloy on 4/2/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct PokemonSearchDetailView: View {
+struct PokemonDetailView: View {
 
-  let pokemon: Pokemon
+  let pokemon: PokemonDetail
 
   var body: some View {
     VStack {
@@ -28,5 +28,5 @@ struct PokemonSearchDetailView: View {
 }
 
 #Preview {
-  PokemonSearchDetailView(pokemon: .init(name: "Pikachu", url: ""))
+  PokemonDetailView(pokemon: .init(name: "Pikachu", url: ""))
 }

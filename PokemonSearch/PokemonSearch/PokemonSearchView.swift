@@ -24,7 +24,7 @@ struct PokemonSearchView: View {
         .focused($textFieldFocused)
 
       if let pokemon = viewModel.pokemon {
-        PokemonSearchDetailView(pokemon: pokemon)
+        PokemonDetailView(pokemon: pokemon)
       } else {
         Spacer()
       }

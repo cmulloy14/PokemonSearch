@@ -11,7 +11,7 @@ import Foundation
 final class PokemonSearchViewModel: ObservableObject {
 
   
-  @Published var pokemon: Pokemon?
+  @Published var pokemon: PokemonDetail?
   @Published var searchText = ""
 
   private let service = PokemonService.shared

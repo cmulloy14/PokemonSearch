@@ -10,8 +10,8 @@ import SwiftUI
 struct PokemonListView: View {
 
   enum ViewMode {
-      case list
-      case grid
+    case list
+    case grid
   }
 
   @StateObject private var viewModel = PokemonListViewModel()
@@ -22,8 +22,6 @@ struct PokemonListView: View {
     GridItem(.flexible())
   ]
 
-
-
   var body: some View {
     NavigationView {
       ZStack {
@@ -31,20 +29,22 @@ struct PokemonListView: View {
           Image(systemName: "exclamationmark.triangle.fill")
             .foregroundStyle(.red)
         }
-        ScrollView {
-          if viewMode == .list {
-            LazyVStack(spacing: 4) {
-              createList()
+        VStack(spacing: 0) {
+          ScrollView {
+            if viewMode == .list {
+              LazyVStack(spacing: 4) {
+                createList()
+              }
+              .padding(.top)
+            } else {
+              LazyVGrid(columns: columns, spacing: 16) {
+                createList()
+              }
+              .padding(.top)
             }
-            .padding(.top)
-          } else {
-            LazyVGrid(columns: columns, spacing: 16) {
-              createList()
-            }
-            .padding(.top)
           }
+          .animation(.easeInOut, value: viewMode)
         }
-        .animation(.easeInOut, value: viewMode)
       }
       .navigationTitle("Pokémon List")
       .toolbar {
@@ -75,7 +75,7 @@ struct PokemonListView: View {
     }
   }
 
-  private func createCell(pokemon: Pokemon, viewMode: ViewMode) -> some View {
+  private func createCell(pokemon: PokemonListItem, viewMode: ViewMode) -> some View {
     PokemonListViewCell(pokemon: pokemon, viewMode: viewMode)
       .onAppear {
         if pokemon == viewModel.pokemonList.last {

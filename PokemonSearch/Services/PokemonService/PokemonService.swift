@@ -12,10 +12,10 @@ struct PokemonListResponse: Decodable {
   let count: Int
   let next: URL?
   let previous: String?
-  let results: [Pokemon]
+  let results: [PokemonListItem]
 }
 
-struct Pokemon: Decodable, Identifiable, Equatable {
+struct PokemonListItem: Decodable, Identifiable, Equatable {
 
   init(name: String, url: String?) {
     self.name = name
@@ -84,13 +84,18 @@ final class PokemonService: PokemonServiceProtocol {
     }
   }
 
-  func pokemonSearch(searchText: String) async throws -> Pokemon {
+  func pokemonSearch(searchText: String) async throws -> PokemonDetail {
     guard let url = URL(string: "\(baseURL)/\(searchText)") else {
       throw URLError(.badURL)
     }
 
     let (data, _) = try await URLSession.shared.data(from: url)
-    return try JSONDecoder().decode(Pokemon.self, from: data)
+    return try JSONDecoder().decode(PokemonDetail.self, from: data)
+  }
+
+  func getPokemonDetail(url: URL) async throws -> PokemonDetail {
+    let (data, _) = try await URLSession.shared.data(from: url)
+    return try JSONDecoder().decode(PokemonDetail.self, from: data)
   }
 }
 
