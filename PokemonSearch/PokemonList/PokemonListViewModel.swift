@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol PokemonServiceProtocol {
   func fetchPokemonList(from url: URL?) async throws -> PokemonListResponse
@@ -18,6 +19,13 @@ protocol PokemonServiceProtocol {
 
 @MainActor
 final class PokemonListViewModel: ObservableObject {
+
+  enum NavigationDestination: Hashable {
+    case detailView(listItem: PokemonListItem)
+  }
+
+  @Published var navigationPath = [NavigationDestination]()
+
   @Published var pokemonList: [PokemonListItem] = []
   @Published var nextPageURL = URL(string:"https://pokeapi.co/api/v2/pokemon")
   @Published var isLoading = false
@@ -35,7 +43,6 @@ final class PokemonListViewModel: ObservableObject {
     guard let url = nextPageURL, !isLoading else { return }
     isLoading = true
 
-
     do {
       try await Task.sleep(nanoseconds: 1_000_000_000)
       let response = try await service.fetchPokemonList(from: url)
@@ -45,6 +52,10 @@ final class PokemonListViewModel: ObservableObject {
       print("Error fetching Pokémon: \(error)")
     }
     isLoading = false
+  }
+
+  func didTapListItem(_ listItem: PokemonListItem) {
+    navigationPath.append(.detailView(listItem: listItem))
   }
 
   func fetchPokemonCompletion() {

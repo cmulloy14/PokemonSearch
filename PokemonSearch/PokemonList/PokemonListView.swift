@@ -23,7 +23,7 @@ struct PokemonListView: View {
   ]
 
   var body: some View {
-    NavigationView {
+    NavigationStack(path: $viewModel.navigationPath) {
       ZStack {
         if viewModel.showError {
           Image(systemName: "exclamationmark.triangle.fill")
@@ -47,6 +47,12 @@ struct PokemonListView: View {
         }
       }
       .navigationTitle("Pokémon List")
+      .navigationDestination(for: PokemonListViewModel.NavigationDestination.self) { destination in
+        switch destination {
+        case let .detailView(listItem):
+          PokemonDetailView(fromListItem: listItem)
+        }
+      }
       .toolbar {
         Picker("View Mode", selection: $viewMode) {
           Label("List", systemImage: "list.bullet").tag(ViewMode.list)
@@ -57,6 +63,7 @@ struct PokemonListView: View {
       .task {
         await viewModel.fetchPokemon()
       }
+
     }
     .alert("Something went wrong", isPresented: $viewModel.showErrorAlert) {
       Button("OK", role: .cancel) { }
@@ -83,6 +90,9 @@ struct PokemonListView: View {
             await viewModel.fetchPokemon()
           }
         }
+      }
+      .onTapGesture {
+        viewModel.didTapListItem(pokemon)
       }
   }
 }

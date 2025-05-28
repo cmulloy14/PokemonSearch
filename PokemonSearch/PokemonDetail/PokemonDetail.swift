@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct PokemonDetail: Decodable, Identifiable, Equatable {
+struct PokemonDetail: Identifiable, Equatable {
 
-  init(name: String, url: String?) {
+  init(name: String, url: URL) {
     self.name = name
     self.url = url
   }
 
 
   let name: String
-  var url: String?
+  let url: URL
   private var pokemonID: Int?
 
   var imageURL: URL? {
@@ -26,15 +26,18 @@ struct PokemonDetail: Decodable, Identifiable, Equatable {
 
   var id: Int? {
     if let pokemonID { return pokemonID }
-    guard let url else { return nil }
+    let urlString = url.absoluteString
     let pattern = #"/pokemon/(\d+)/"#
     if let regex = try? NSRegularExpression(pattern: pattern),
-       let match = regex.firstMatch(in: url, range: NSRange(url.startIndex..., in: url)),
-       let range = Range(match.range(at: 1), in: url) {
-      return Int(url[range])
+       let match = regex.firstMatch(in: urlString, range: NSRange(urlString.startIndex..., in: urlString)),
+       let range = Range(match.range(at: 1), in: urlString) {
+      return Int(urlString[range])
     }
     return nil
   }
+}
+
+extension PokemonDetail: Decodable {
 
   enum CodingKeys: String, CodingKey {
     case name
@@ -45,8 +48,7 @@ struct PokemonDetail: Decodable, Identifiable, Equatable {
   init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.name = try container.decode(String.self, forKey: .name)
-    self.url = try container.decodeIfPresent(String.self, forKey: .url)
+    self.url = try container.decode(URL.self, forKey: .url)
     self.pokemonID = try container.decodeIfPresent(Int.self, forKey: .pokemonID)
   }
-
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PokemonSearchView: View {
   @StateObject private var viewModel = PokemonSearchViewModel()
-
   @FocusState private var textFieldFocused: Bool
 
   var body: some View {
@@ -24,7 +23,17 @@ struct PokemonSearchView: View {
         .focused($textFieldFocused)
 
       if let pokemon = viewModel.pokemon {
-        PokemonDetailView(pokemon: pokemon)
+        PokemonDetailView(viewModel: .init(
+          .init(
+            pokemonDetailPartial: .init(
+              pokemonName: pokemon.name,
+              pokemonDetailURL: pokemon.url,
+              pokemonID: pokemon.id,
+              pokemonImageURL: pokemon.imageURL
+            )
+          )
+        )
+        )
       } else {
         Spacer()
       }

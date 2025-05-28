@@ -9,7 +9,6 @@ import Foundation
 
 @MainActor
 final class PokemonSearchViewModel: ObservableObject {
-
   
   @Published var pokemon: PokemonDetail?
   @Published var searchText = ""
